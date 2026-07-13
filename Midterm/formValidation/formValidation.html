@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Form Handler</title>
+</head>
+
+<body>
+
+<center>
+<h1>Registration Form</h1>
+</center>
+
+<form onsubmit="return handlesubmit()">
+
+<label>Name:</label>
+<input type="text" id="name">
+
+<label>ID:</label>
+<input type="text" id="Sid">
+
+<label>Age:</label>
+<input type="text" id="age">
+
+<label>Department:</label>
+<select id="Dept">
+<option value="">Select the Dept</option>
+<option value="CSE">--CSE--</option>
+<option value="EEE">--EEE--</option>
+<option value="BBA">--BBA--</option>
+<option value="DS">--DS--</option>
+</select>
+
+<button type="submit">Submit</button>
+
+</form>
+
+<p id="error"></p>
+
+<p id="result"></p>
+
+<script>
+
+function handlesubmit()
+{
+    var name = document.getElementById("name").value;
+    var id = document.getElementById("Sid").value;
+    var age = document.getElementById("age").value;
+    var dept = document.getElementById("Dept").value;
+
+    document.getElementById("error").innerHTML = "";
+    document.getElementById("result").innerHTML = "";
+
+    // Validation 1: Empty Field
+    if(name=="" || age=="" || id=="" || dept=="")
+    {
+        document.getElementById("error").innerHTML="Please fill the form";
+        return false;
+    }
+
+    // Validation 2: ID must be 5 digits
+    if(id.length!=5 || isNaN(id))
+    {
+        document.getElementById("error").innerHTML="ID must be 5 digits";
+        return false;
+    }
+
+    // Validation 3: ID must start with 23
+    if(!id.startsWith("23"))
+    {
+        document.getElementById("error").innerHTML="ID must start with 23";
+        return false;
+    }
+
+    // Validation 4: Age must be numeric
+    if(isNaN(age))
+    {
+        document.getElementById("error").innerHTML="Age must be a number";
+        return false;
+    }
+
+    // Validation 5: Age must be less than 25
+    if(parseInt(age)>=25)
+    {
+        document.getElementById("error").innerHTML="Age must be less than 25";
+        return false;
+    }
+
+    // Validation 6: Name must contain only letters
+    var pattern=/^[A-Za-z ]+$/;
+
+    if(!pattern.test(name))
+    {
+        document.getElementById("error").innerHTML="Name must contain only letters";
+        return false;
+    }
+
+    document.getElementById("result").innerHTML =
+    "Registration Complete <br><br>" +
+    "Name: " + name + "<br>" +
+    "Age: " + age + "<br>" +
+    "ID: " + id + "<br>" +
+    "Dept: " + dept;
+
+    return false;
+}
+
+</script>
+
+</body>
+
+</html>

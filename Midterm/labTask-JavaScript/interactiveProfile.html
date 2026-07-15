@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interactive Portfolio</title>
+</head>
+
+<body>
+<center>
+<h1>My Portfolio</h1>
+</center>
+<button onclick="theme()">Dark / Light Mode</button>
+<p id="greeting"></p>
+<a href="#" onclick="show('about')">About</a>
+<a href="#" onclick="show('project')">Projects</a>
+<a href="#" onclick="show('contact')">Contact</a>
+<br><br>
+<div id="about">
+<h2>About</h2>
+<p>I am a CSE Student.</p>
+</div>
+<div id="project" style="display:none">
+<h2>Projects</h2>
+<p>Portfolio Website</p>
+<p>Library Management System</p>
+</div>
+<div id="contact" style="display:none">
+<h2>Contact</h2>
+<form onsubmit="return handlesubmit()">
+<label>Name:</label>
+<input type="text" id="name">
+<br><br>
+<label>Email:</label>
+<input type="text" id="email">
+<br><br>
+<label>Message:</label>
+<textarea id="message"></textarea>
+<br><br>
+<button type="submit">Submit</button>
+</form>
+
+<p id="error"></p>
+<p id="result"></p>
+</div>
+
+<script>
+var dark = false;
+function theme()
+{
+    if(dark==false)
+    {
+        document.body.style.background="black";
+        document.body.style.color="white";
+        dark=true;
+    }
+    else
+    {
+        document.body.style.background="white";
+        document.body.style.color="black";
+        dark=false;
+    }
+}
+
+var hour = new Date().getHours();
+if(hour<12)
+{
+    document.getElementById("greeting").innerHTML="Good Morning";
+}
+else if(hour<18)
+{
+    document.getElementById("greeting").innerHTML="Good Afternoon";
+}
+else
+{
+    document.getElementById("greeting").innerHTML="Good Evening";
+}
+function show(id)
+{
+    document.getElementById("about").style.display="none";
+    document.getElementById("project").style.display="none";
+    document.getElementById("contact").style.display="none";
+
+    document.getElementById(id).style.display="block";
+}
+
+function handlesubmit()
+{
+    var name = document.getElementById("name").value;
+    var email = document.getElementById("email").value;
+    var message = document.getElementById("message").value;
+
+    document.getElementById("error").innerHTML="";
+    document.getElementById("result").innerHTML="";
+
+    if(name=="" || email=="" || message=="")
+    {
+        document.getElementById("error").innerHTML="Please fill the form";
+        return false;
+    }
+    var emailPattern=/^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+    if(!emailPattern.test(email))
+    {
+        document.getElementById("error").innerHTML="Invalid Email";
+        return false;
+    }
+    if(message.length<10)
+    {
+        document.getElementById("error").innerHTML="Message must be at least 10 characters";
+        return false;
+    }
+
+    document.getElementById("result").innerHTML=
+    "Message Sent Successfully <br><br>" +
+    "Name: " + name + "<br>" +
+    "Email: " + email + "<br>" +
+    "Message: " + message;
+
+    return false;
+}
+</script>
+</body>
+</html>
